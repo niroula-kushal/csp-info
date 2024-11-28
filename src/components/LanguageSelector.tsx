@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Language, languages } from '../data/languages';
 import * as Icons from 'lucide-react';
 import { LucideProps } from 'lucide-react';
@@ -12,9 +12,19 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
   onSelectLanguage,
 }) => {
+  const [query, setQuery] = useState("");
+  const filteredLanguages = useMemo(() => {
+    if(!query) return languages;
+    console.log(query)
+    return languages.filter(x => x.name.toLowerCase().includes(query.toLowerCase().trim())); 
+  }, [query]);
   return (
+    <>
+    <input className='w-full my-2 p-2' value={query} onChange={e => setQuery(e.target.value)} 
+      placeholder='Filter languages'
+    />
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {languages.map((language) => {
+      {filteredLanguages.map((language) => {
         const IconComponent = (Icons as Record<string, React.FC<LucideProps>>)[
           language.icon.charAt(0).toUpperCase() + language.icon.slice(1)
         ] || Icons.Code;
@@ -37,6 +47,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         );
       })}
     </div>
+    </>
   );
 };
 
