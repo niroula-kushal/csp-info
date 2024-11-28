@@ -1,6 +1,8 @@
 import React from 'react';
 import { CSPGuide, cspGuides } from '../data/cspGuides';
 import * as Icons from 'lucide-react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 interface CSPGuideDisplayProps {
   frameworkId: string;
@@ -27,7 +29,10 @@ const CSPGuideDisplay: React.FC<CSPGuideDisplayProps> = ({ frameworkId }) => {
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-4">Implementation</h3>
           <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
-            <code className="text-sm">{guide.implementation}</code>
+          <SyntaxHighlighter style={docco}>
+          {guide.implementation}
+            </SyntaxHighlighter>
+            <code className="text-sm"></code>
           </pre>
         </div>
       </div>
@@ -36,7 +41,10 @@ const CSPGuideDisplay: React.FC<CSPGuideDisplayProps> = ({ frameworkId }) => {
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-4">Example</h3>
           <pre className="bg-gray-50 p-4 rounded-lg overflow-x-auto">
-            <code className="text-sm">{guide.example}</code>
+            <SyntaxHighlighter language="python" style={docco}>
+              {guide.example}
+            </SyntaxHighlighter>
+            <code className="text-sm"></code>
           </pre>
         </div>
       </div>
